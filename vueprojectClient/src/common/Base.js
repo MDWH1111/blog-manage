@@ -5,7 +5,7 @@ export default {
             self: this,
             ids: [],
             filter: {
-                limit: 5,
+                limit: 8,
                 page: 1,
                 name: '',
                 total: 0
@@ -21,9 +21,8 @@ export default {
                     var _this = this;
                     var subUrl = "";
                     var method = "";
-
+                    console.log(_this.model,33333);
                     if (_this.formValidate._id != null) {
-
                         subUrl = `http://localhost:3000/${_this.model}/data/` + _this.formValidate._id;
                         method = "PUT";
                     } else {
@@ -59,13 +58,17 @@ export default {
         },
         getData() {
             var _this = this;
-            console.log(_this.filter, 270);
+            console.log(_this.filter, '我进入了getData');
             this.$http.post(`http://localhost:3000/${_this.model}/list`, _this.filter).then(function(result) {
-                    console.log(result, 281);
+                    console.log(result, '我进行了http请求');
                     if ('docs' in result.data) {
-                        console.log(_this.list, 286);
+                        console.log(result, '查询我有数据2222sssss');
                         _this.list = result.data.docs;
                         _this.filter.total = result.data.total;
+                       if(_this.filter.page!=1 && _this.filter.name!='' ){
+                            _this.filter.page=1;
+                            _this.filter.name=''
+                       }
 
                     }
                 })
@@ -97,7 +100,9 @@ export default {
                     title: '警告',
                     content: '确认删除?',
                     onOk: () => {
-                        _this.$http.post(`http://localhost:3000${_this.model}/removes`, { ids: _this.ids }).then(function(res) {
+                        console.log(_this.model,_this.ids,2222222);
+                        _this.$http.post(`http://localhost:3000/${_this.model}/removes`, { ids: _this.ids }).then(function(res) {
+                            console.log(res,100);
                             _this.getData();
                             _this.$Message.info("删除成功");
 

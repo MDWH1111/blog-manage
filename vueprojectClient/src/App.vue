@@ -1,5 +1,6 @@
 <template>
   <div class="layout" :class="{'layout-hide-text': spanLeft < 5}">
+    <template v-if="login">
         <Row type="flex">
             <i-col :span="spanLeft" class="layout-menu-left">
                 <Menu theme="dark" width="auto">
@@ -65,23 +66,63 @@
                 </div>
             </i-col>
         </Row>
+      </template>
+      <template v-else>
+        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80"> 
+            <Modal v-model="model" class-name="vertical-center-modal" :mask-closable="false">
+                <p slot="header" style="color:#39f;text-align:center;font-size:20px;">
+                    <span>后台管理系统</span>
+                </p>
+                <div slot="footer"></div>
+                <Form-item label="用户名" prop="name">
+                    <Input v-model="formValidate.name"></Input>
+                </Form-item>
+                    <Form-item label="密码" prop="pwd">
+                    <Input v-model="formValidate.pwd"></Input>
+                </Form-item>
+                <p style="margin-bottom:10px;">Tips：***用户名，密码随便填***</p>
+                <Form-item>
+                    <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+                    <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
+                </Form-item>
+            </Modal>
+        </Form>
+      </template>
     </div>
 </template>
 
 <script>
+import {mapGetters,mapActions} from 'vuex';
+var CryptoJs = require('crypto-js');
 export default {
   data () {
       return {
+          model:true,
           spanLeft: 5,
-          spanRight: 19
+          spanRight: 19,
+          formValidate:{
+            name:'',
+            pwd:''
+          },
+          ruleValidate: {
+            name: [
+                { required: true, message: '姓名不能为空', trigger: 'blur' }
+            ],
+            
+            pwd: [
+                { required: true, message: '请输入个人介绍', trigger: 'blur' }
+            ]
+        }
       }
     },
   computed: {
       iconSize () {
           return this.spanLeft === 5 ? 14 : 24;
-      }
+      },
+      ...mapGetters(['login'])
   },
   methods: {
+      ...mapActions(['checklogin']),
       toggleClick () {
           if (this.spanLeft === 5) {
               this.spanLeft = 2;
@@ -90,6 +131,17 @@ export default {
               this.spanLeft = 5;
               this.spanRight = 19;
           }
+      },
+      handleSubmit(name){
+        var _this = this;
+        _this.formValidate.pwd = CryptoJs.MD5(_this.formValidate.pwd,{assign:true}).toString();
+        this.$refs[name].validate((valid) => {
+            if (valid) {
+                _this.$http.post('http://localhost:3000/users/login',_this.formValidate).then(res=>{
+                    _this.checklogin(true);
+                })
+            }
+        })    
       }
   }
 }
@@ -154,4 +206,24 @@ export default {
     .active li{
         background: #313540;
     }
+    .vertical-center-modal{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .ivu-modal{
+            top: 0;
+        }
+    }
+    .ivu-form-item-label{
+        position:relative;
+        top:25px;
+    }
+    .v-transfer-dom .ivu-modal-mask{
+        background-color:#324157;
+    }
+    .ivu-modal .ivu-modal-content{
+        background:#d7dde4;
+    }
+    
 </style>

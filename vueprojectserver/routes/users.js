@@ -6,6 +6,7 @@ router.get('/',dataCtrl.getAll);
 router.post('/data',dataCtrl.create);
 router.post('/list',dataCtrl.list);
 router.post('/removes',dataCtrl.removes);
+router.post('/login',dataCtrl.login);
 
 router.delete('/:id',dataCtrl.remove);
 router.put('/data/:id',dataCtrl.update);

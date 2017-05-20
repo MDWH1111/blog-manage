@@ -1,24 +1,25 @@
 var mongoose = require('mongoose');
 
-const Blog = require('../models/blog.model'); // 数据模型的内容引入进来，User就是一个用户对象
+const Comment = require('../models/comment.model'); // 数据模型的内容引入进来，User就是一个用户对象
 
 // 新建用户
 exports.create = function(req,res,next){
-    const blog = new Blog(req.body);
-    blog.save().then(data=>{
+    const comment = new Comment(req.body);
+    comment.save().then(data=>{
         res.json(data);
     })
 }
 
 // 查询所有用户
 exports.getAll = function(req,res,next){
-    Blog.find({}).then(data=>{
+    Comment.find({}).then(data=>{
         res.json(data);
     })
 }
 
 // 分页查询
 exports.list = function(req,res,next){
+    console.log('我要进行分页啦')
     var page = (req.body.page) ? req.body.page : 1;
     page = parseInt(page);
     var limit = (req.body.limit) ? req.body.limit: 8;
@@ -30,9 +31,10 @@ exports.list = function(req,res,next){
             "title":new RegExp(name,'i') //构建了一个正则表达式进行name字段模糊匹配
         }
     }
-    console.log(keywords)
+    console.log(keywords,5555555555,limit,page);
 
-    Blog.paginate(keywords,{page:page,limit:limit},function(err,result){
+    Comment.paginate(keywords,{page:page,limit:limit},function(err,result){
+        console.log(keywords,limit,page,result,88888888);
         if(err){
             console.log(err);
         }
@@ -44,7 +46,7 @@ exports.list = function(req,res,next){
 //删除id用户
 exports.remove = function(req,res,next){
     var id = req.params.id;
-    Blog.findByIdAndRemove(id,function(){
+    Comment.findByIdAndRemove(id,function(){
         res.json({status:200,msg:'ok'});
     })
 }
@@ -52,7 +54,7 @@ exports.remove = function(req,res,next){
 // 删除多个
 exports.removes = function(req,res,next){
     var ids = req.body.ids;
-    Blog.remove({_id: { $in:ids }},function(){
+    Comment.remove({_id: { $in:ids }},function(){
         res.json({status:200,msg:'ok'});
     })
 
@@ -61,7 +63,7 @@ exports.removes = function(req,res,next){
 // 更新
 exports.update = function(req,res,next){
     var id = req.params.id;
-    Blog.findByIdAndUpdate(id,{$set:req.body},{new:false}).then(data=>{
+    Comment.findByIdAndUpdate(id,{$set:req.body},{new:false}).then(data=>{
         res.json(data);
     })
 }
