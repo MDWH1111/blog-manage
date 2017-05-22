@@ -21,6 +21,9 @@
 ![请输入图片描述][5]
 
   [5]: http://www.maodan.online/blog-image/6.bmp
-  
+![请输入图片描述][6]
+
+[6]: http://www.maodan.online/blog-image/6.bmp
+
 
 
