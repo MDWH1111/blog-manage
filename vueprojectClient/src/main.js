@@ -11,7 +11,7 @@ import {store} from './store'
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueSimplemde from 'vue-simplemde'
-
+import IEcharts from 'vue-echarts-v3/src/full.vue';
 
 
 Vue.use(iview);

@@ -140,7 +140,7 @@
         }
     }
 </script>
-<style>
+<style scoped>
     .tree{
         border:1px solid #d7dde4;
         margin:20px 0;

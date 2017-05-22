@@ -117,7 +117,7 @@
         }
     }
 </script>
-<style>
+<style scoped>
     .blog-page{
         float:left;
         margin-top:30px;
@@ -132,4 +132,5 @@
     .blog-search{
         margin:20px 0;
     }
+    
 </style>

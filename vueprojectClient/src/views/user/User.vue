@@ -122,7 +122,7 @@
                 self:this,
                 ids:[],
                 filter:{
-                    limit:5,
+                    limit:8,
                     page:1,
                     name:'',
                     tatal:0
@@ -314,7 +314,7 @@
         }
     }
 </script>
-<style>
+<style scoped>
     .table{
         margin-bottom:30px;
     }
@@ -326,5 +326,9 @@
     }
     .ivu-modal-footer{
         padding:0;
+    }
+    .ivu-form-item-label{
+        position:relative;
+        top:0px;
     }
 </style>

@@ -3,44 +3,43 @@
     <template v-if="login">
         <Row type="flex">
             <i-col :span="spanLeft" class="layout-menu-left">
-                <Menu theme="dark" width="auto">
-                    <div class="layout-logo-left"></div>
-                    <router-link :to="{name:'home'}" active-class="active" exact>
-                        <Menu-item name="1">
-                            <Icon type="ios-navigate" :size="iconSize"></Icon>
-                            <span class="layout-text">首页</span>
+                <Menu theme="dark" width="auto" @on-select="itemChange" :active-name="activeName">
+                    <div class="layout-logo-left" style="color:#bfcbd9;font-size:22px;font-weight:bold;">博客后台管理系统</div>
+                        <Menu-item name="home">
+                            <Icon type="android-home" :size="20"></Icon>
+                            <span class="layout-text" style="color:#bfcbd9">首页</span>
                         </Menu-item>
-                    </router-link>
-                    <router-link :to="{name:'user'}" active-class="active">
-                        <Menu-item name="2">
-                            <Icon type="ios-navigate" :size="iconSize"></Icon>
-                            <span class="layout-text">user</span>
+                    
+                        <Menu-item name="user">
+                            <Icon type="transgender" :size="20"></Icon>
+                            <span class="layout-text">用户</span>
                         </Menu-item>
-                    </router-link>
-                    <router-link :to="{name:'blog'}" active-class="active">
-                        <Menu-item name="3">
-                            <Icon type="ios-keypad" :size="iconSize"></Icon>
-                            <span class="layout-text">blog</span>
+                    
+                        <Menu-item name="blog">
+                            <Icon type="compose" :size="20"></Icon>
+                            <span class="layout-text">日志</span>
                         </Menu-item>
-                    </router-link>
-                    <router-link :to="{name:'cate'}" active-class="active">
-                        <Menu-item name="4">
-                            <Icon type="ios-analytics" :size="iconSize"></Icon>
-                            <span class="layout-text">cate</span>
+                    
+                        <Menu-item name="cate">
+                            <Icon type="ios-cog" :size="20"></Icon>
+                            <span class="layout-text">分类</span>
                         </Menu-item>
-                    </router-link>
-                    <router-link :to="{name:'comment'}" active-class="active">
-                        <Menu-item name="5">
-                            <Icon type="ios-analytics" :size="iconSize"></Icon>
-                            <span class="layout-text">comment</span>
+                    
+                        <Menu-item name="comment">
+                            <Icon type="chatbubble-working" :size="20"></Icon>
+                            <span class="layout-text">评论</span>
                         </Menu-item>
-                    </router-link>
-                    <router-link :to="{name:'upload'}" active-class="active">
-                        <Menu-item name="6">
-                            <Icon type="ios-analytics" :size="iconSize"></Icon>
-                            <span class="layout-text">upload</span>
+                    
+                        <Menu-item name="upload">
+                            <Icon type="upload" :size="20"></Icon>
+                            <span class="layout-text">上传</span>
                         </Menu-item>
-                    </router-link>
+                    
+                        <Menu-item name="chart">
+                            <Icon type="ios-analytics" :size="20"></Icon>
+                            <span class="layout-text">图表</span>
+                        </Menu-item>
+                    
                 </Menu>
             </i-col>
             <i-col :span="spanRight">
@@ -68,17 +67,17 @@
         </Row>
       </template>
       <template v-else>
-        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80"> 
+        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80" style="background:#d7dde4;"> 
             <Modal v-model="model" class-name="vertical-center-modal" :mask-closable="false">
                 <p slot="header" style="color:#39f;text-align:center;font-size:20px;">
                     <span>后台管理系统</span>
                 </p>
-                <div slot="footer"></div>
+                <div slot="footer" style="padding:0"></div>
                 <Form-item label="用户名" prop="name">
-                    <Input v-model="formValidate.name"></Input>
+                    <Input v-model="formValidate.name" style="position:absolute;top:-25px;"></Input>
                 </Form-item>
-                    <Form-item label="密码" prop="pwd">
-                    <Input v-model="formValidate.pwd"></Input>
+                <Form-item label="密码" prop="pwd" style="margin:40px 0;">
+                    <Input v-model="formValidate.pwd" style="position:absolute;top:-25px;"></Input>
                 </Form-item>
                 <p style="margin-bottom:10px;">Tips：***用户名，密码随便填***</p>
                 <Form-item>
@@ -100,6 +99,7 @@ export default {
           model:true,
           spanLeft: 5,
           spanRight: 19,
+          activeName:'home',
           formValidate:{
             name:'',
             pwd:''
@@ -142,6 +142,10 @@ export default {
                 })
             }
         })    
+      },
+      itemChange(name){        
+        this.activeName=name;
+        this.$router.push({name:name});
       }
   }
 }
@@ -215,15 +219,9 @@ export default {
             top: 0;
         }
     }
-    .ivu-form-item-label{
-        position:relative;
-        top:25px;
+    .ivu-modal-content .ivu-modal-footer{
+        padding:0;
     }
-    .v-transfer-dom .ivu-modal-mask{
-        background-color:#324157;
-    }
-    .ivu-modal .ivu-modal-content{
-        background:#d7dde4;
-    }
+  
     
 </style>

@@ -124,7 +124,7 @@
         }
     }
 </script>
-<style>
+<style scoped>
     .comment-page{
         float:left;
         margin-top:30px;
@@ -138,5 +138,9 @@
     }
     .comment-search{
         margin:20px 0;
+    }
+    .ivu-form-item-label{
+        position:relative;
+        top:0px;
     }
 </style>

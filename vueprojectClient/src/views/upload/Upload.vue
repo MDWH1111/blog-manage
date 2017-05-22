@@ -100,7 +100,7 @@
         }
     }
 </script>
-<style>
+<style scoped>
     .demo-upload-list{
         display: inline-block;
         width: 60px;
